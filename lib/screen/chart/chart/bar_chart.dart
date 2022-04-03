@@ -1,6 +1,7 @@
-import 'package:corona_news/theme/main_theme.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
+
+import '../../../contanse/main_theme.dart';
 
 class _BarChart extends StatelessWidget {
   const _BarChart({Key? key}) : super(key: key);

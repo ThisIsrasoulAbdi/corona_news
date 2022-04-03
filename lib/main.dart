@@ -1,8 +1,9 @@
+import 'package:corona_news/contanse/main_theme.dart';
 import 'package:corona_news/screen/about/about.dart';
 import 'package:corona_news/screen/chart/chart.dart';
 import 'package:corona_news/screen/home/home_page.dart';
 import 'package:corona_news/screen/news/news.dart';
-import 'package:corona_news/theme/main_theme.dart';
+import 'package:corona_news/screen/onboarding/onboardign_page.dart';
 import 'package:corona_news/widgets/appbar.dart';
 import 'package:corona_news/widgets/bottom_nav.dart';
 import 'package:corona_news/widgets/drawer.dart';
@@ -48,7 +49,7 @@ class MyApp extends StatelessWidget {
       ),
       home: const Directionality(
         textDirection: TextDirection.rtl,
-        child: MainScreen(),
+        child: OnBoardingScreen(),
       ),
     );
   }
@@ -71,29 +72,32 @@ class _MainScreenState extends State<MainScreen> {
   @override
   Widget build(BuildContext context) {
     ThemeData themeData = Theme.of(context);
-    return Scaffold(
-      appBar: AppBar(
-        title: CustomAppBar(themeData: themeData),
-        iconTheme: IconThemeData(size: 28),
-      ),
-      drawer: const DrawerCustom(),
-      drawerScrimColor: ThemeLight.primaryColor.withAlpha(98),
-      body: IndexedStack(
-        index: indexCurrent,
-        children: const [
-          HomeScreen(),
-          NewsScreen(),
-          ChartScreen(),
-          AboutScreen(),
-        ],
-      ),
-      bottomNavigationBar: CurvedBottomNav(
-        selected: indexCurrent,
-        isSelected: (int index) {
-          setState(() {
-            indexCurrent = index;
-          });
-        },
+    return Directionality(
+      textDirection: TextDirection.rtl,
+      child: Scaffold(
+        appBar: AppBar(
+          title: CustomAppBar(themeData: themeData),
+          iconTheme: const IconThemeData(size: 28),
+        ),
+        drawer: const DrawerCustom(),
+        drawerScrimColor: ThemeLight.primaryColor.withAlpha(98),
+        body: IndexedStack(
+          index: indexCurrent,
+          children: const [
+            HomeScreen(),
+            NewsScreen(),
+            ChartScreen(),
+            AboutScreen(),
+          ],
+        ),
+        bottomNavigationBar: CurvedBottomNav(
+          selected: indexCurrent,
+          isSelected: (int index) {
+            setState(() {
+              indexCurrent = index;
+            });
+          },
+        ),
       ),
     );
   }

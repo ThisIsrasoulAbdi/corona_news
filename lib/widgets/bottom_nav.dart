@@ -7,7 +7,7 @@ import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import '../theme/main_theme.dart';
+import '../contanse/main_theme.dart';
 
 class CurvedBottomNav extends StatefulWidget {
   Function(int selected) isSelected;

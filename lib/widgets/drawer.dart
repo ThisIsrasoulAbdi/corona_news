@@ -1,7 +1,9 @@
 import 'package:corona_news/screen/about/about.dart';
-import 'package:corona_news/theme/main_theme.dart';
+import 'package:corona_news/widgets/image_catched.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+
+import '../contanse/main_theme.dart';
 
 class DrawerCustom extends StatelessWidget {
   const DrawerCustom({Key? key}) : super(key: key);
@@ -35,10 +37,9 @@ class DrawerCustom extends StatelessWidget {
                       ),
                       child: ClipRRect(
                         borderRadius: BorderRadius.circular(100),
-                        child: Image.network(
-                          "https://img.freepik.com/free-photo/portrait-white-man-isolated_53876-40306.jpg?size=626&ext=jpg&ga=GA1.2.1190783409.1639699200",
-                          fit: BoxFit.cover,
-                        ),
+                        child: ImageNetwork(
+                            urlImage:
+                                "https://www.faceapp.com/static/img/content/compare/old-example-before@3x.jpg"),
                       ),
                     ),
                     Positioned(
@@ -138,7 +139,7 @@ class DrawerCustom extends StatelessWidget {
                     onPressed: () {},
                     style: ButtonStyle(
                       backgroundColor:
-                          MaterialStateProperty.all(Colors.grey.shade400),
+                          MaterialStateProperty.all(Colors.grey.shade300),
                       shape: MaterialStateProperty.all(
                         RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(22),

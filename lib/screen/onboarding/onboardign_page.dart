@@ -1,8 +1,11 @@
 import 'package:corona_news/data/data_static/data_onboarding.dart';
+import 'package:corona_news/main.dart';
 import 'package:corona_news/screen/home/home_page.dart';
-import 'package:corona_news/theme/main_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
+
+import '../../contanse/constanse.dart';
+import '../../contanse/main_theme.dart';
 
 class OnBoardingScreen extends StatefulWidget {
   const OnBoardingScreen({Key? key}) : super(key: key);
@@ -44,12 +47,12 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                   height: 300,
                 ),
                 Container(
-                  height: 490,
+                  height: 520,
                   width: double.infinity,
                   decoration: BoxDecoration(
                       borderRadius: const BorderRadius.only(
-                        topLeft: Radius.circular(54),
-                        topRight: Radius.circular(54),
+                        topLeft: Radius.circular(Constanse.myPadding * 5),
+                        topRight: Radius.circular(Constanse.myPadding * 5),
                       ),
                       color: Colors.white,
                       boxShadow: [
@@ -66,7 +69,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                         width: 300,
                         height: 250,
                         child: PageView.builder(
-                            itemCount: 3,
+                            itemCount: dataOnBoardMessage.length,
                             controller: controller,
                             scrollDirection: Axis.horizontal,
                             itemBuilder: (context, index) {
@@ -98,7 +101,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                                 Navigator.pushReplacement(
                                     context,
                                     MaterialPageRoute(
-                                      builder: (context) => const HomeScreen(),
+                                      builder: (context) => const MainScreen(),
                                     ));
                               },
                               child: Text(
@@ -110,7 +113,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                               children: [
                                 Row(
                                   children: [
-                                    Text('${page - 0}',
+                                    Text('${page < 1 ? 0 : page}',
                                         style: themeData.textTheme.headline6),
                                     Container(
                                       margin: const EdgeInsets.all(8),
@@ -150,7 +153,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                                         context,
                                         MaterialPageRoute(
                                             builder: (context) =>
-                                                const HomeScreen()));
+                                                const MainScreen()));
                                   } else {
                                     controller.nextPage(
                                         duration: (const Duration(

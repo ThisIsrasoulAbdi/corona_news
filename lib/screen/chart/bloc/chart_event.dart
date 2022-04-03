@@ -8,3 +8,5 @@ abstract class ChartEvent extends Equatable {
 }
 
 class ChartStarted extends ChartEvent {}
+
+class ChartRefresh extends ChartEvent {}
