@@ -1,13 +1,17 @@
+import 'package:corona_news/contanse/constanse.dart';
 import 'package:corona_news/data/repo/corona_repository.dart';
 import 'package:corona_news/screen/chart/bloc/chart_bloc.dart';
-import 'package:corona_news/theme/main_theme.dart';
+import 'package:corona_news/screen/chart/warning_item.dart';
+import 'package:corona_news/screen/home/info_item.dart';
 import 'package:corona_news/widgets/drawer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:toggle_switch/toggle_switch.dart';
 
+import '../../contanse/main_theme.dart';
 import 'chart/bar_chart.dart';
 import 'item_country.dart';
+import 'item_death.dart';
 
 class ChartScreen extends StatelessWidget {
   const ChartScreen({Key? key}) : super(key: key);
@@ -59,93 +63,10 @@ class ChartScreen extends StatelessWidget {
                         );
 
                       case 2:
-                        return AspectRatio(
-                          aspectRatio: 3,
-                          child: Container(
-                            margin: EdgeInsets.only(left: 12, right: 12),
-                            height: 170,
-                            width: double.infinity,
-                            decoration: BoxDecoration(
-                              color: Colors.white.withAlpha(200),
-                              borderRadius: BorderRadius.circular(22),
-                            ),
-                            child: Row(
-                              children: [
-                                Stack(
-                                  children: [
-                                    Positioned(
-                                      left: 2,
-                                      bottom: 0,
-                                      top: 0,
-                                      child: Image.asset(
-                                        'assets/images/ic_face_black.png',
-                                        fit: BoxFit.cover,
-                                        height: 200,
-                                      ),
-                                    ),
-                                    Positioned(
-                                      child: Image.asset(
-                                        'assets/images/ic_face_white.png',
-                                        fit: BoxFit.cover,
-                                        height: 200,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                                Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: [
-                                    Text(
-                                      'افراد فوت شده امروز',
-                                      style: themeData.textTheme.headline6!
-                                          .copyWith(
-                                              color: ThemeLight.primaryColor),
-                                    ),
-                                    Text(
-                                      state.coronas.deaths!,
-                                      style: themeData.textTheme.headline6!
-                                          .copyWith(fontSize: 32),
-                                    )
-                                  ],
-                                )
-                              ],
-                            ),
-                          ),
-                        );
+                        return DeathItem(
+                            themeData: themeData, corona: state.coronas);
                       case 3:
-                        return AspectRatio(
-                          aspectRatio: 3,
-                          child: Container(
-                            margin: const EdgeInsets.all(22),
-                            height: 100,
-                            width: double.infinity,
-                            color: Colors.transparent,
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Image.asset(
-                                  'assets/icon/danger.png',
-                                  width: 32,
-                                  height: 32,
-                                ),
-                                const SizedBox(
-                                  width: 12,
-                                ),
-                                Text(
-                                  'دهان و بینی خود را در زمان سرفه یا عطسه\n با آرنج یا یک دستمال بپوشانید\n. فورا دستمال استفاده شده را دور بیندازید.',
-                                  style:
-                                      themeData.textTheme.bodyText2!.copyWith(
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                  textAlign: TextAlign.justify,
-                                ),
-                              ],
-                            ),
-                          ),
-                        );
+                        return WarningItem(themeData: themeData);
                       case 4:
                         //TODO ADD Chart
                         return Stack(
@@ -172,7 +93,57 @@ class ChartScreen extends StatelessWidget {
                   child: CircularProgressIndicator(),
                 );
               } else if (state is ChartErorre) {
-                return Center(child: Text(state.appException.message));
+                return Center(
+                    child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      "اینترنت خود را بررسی کنید",
+                      style: themeData.textTheme.bodyText2!
+                          .copyWith(color: Colors.white),
+                    ),
+                    Container(
+                      margin: EdgeInsets.all(Constanse.myPadding * 2),
+                      height: 200,
+                      decoration: BoxDecoration(
+                        color: ThemeLight.colorWhite,
+                        borderRadius:
+                            BorderRadius.circular(Constanse.myPadding + 5),
+                      ),
+                      child: Column(
+                        children: [
+                          const Padding(
+                            padding: EdgeInsets.all(8.0),
+                            child: Text(
+                              'کاربر گرامی برای دریافت اطلاعات کرونا باید اینترنت شما متصل باشد لطفا اینترنت خود رابررسی کنید',
+                              textAlign: TextAlign.center,
+                            ),
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            children: [
+                              ButtonHome(
+                                  icon: Icons.check,
+                                  onTap: () {
+                                    BlocProvider.of<ChartBloc>(context)
+                                        .add(ChartRefresh());
+                                  },
+                                  title: 'تلاش مجدد',
+                                  themeData: themeData),
+                              ButtonHome(
+                                  icon: Icons.warning_rounded,
+                                  onTap: () {
+                                    //TODO ADD EXIT APPLICATIONS;
+                                  },
+                                  title: 'خروج از برنامه',
+                                  themeData: themeData),
+                            ],
+                          )
+                        ],
+                      ),
+                    )
+                  ],
+                ));
               } else {
                 throw Exception('state is not supported');
               }
